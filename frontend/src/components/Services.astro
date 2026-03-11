@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+import gartenpflege from "../assets/icons/Gartenpflege.svg";
+import winterservice from "../assets/icons/Winterservice.svg";
+import gebaeudereinigung from "../assets/icons/Gebaeudereinigung.svg";
+import hausmeisterservice from "../assets/icons/Gebaeudereinigung.svg";
+---
+
+<section class="about-section" id="about-section">
+     <div>
+          <div>
+               <img
+                    src={gartenpflege.src}
+                    alt="DG Service Logo"
+                    class="mb-3 h-40 w-auto"
+                    fetchpriority="high"
+               />
+               <p>Gartenpflege</p>
+          </div>
+          <div>
+               <img
+                    src={winterservice.src}
+                    alt="DG Service Logo"
+                    class="mb-3 h-40 w-auto"
+                    fetchpriority="high"
+               />
+               <p>Winterservice</p>
+          </div>
+          <div>
+               <img
+                    src={gebaeudereinigung.src}
+                    alt="DG Service Logo"
+                    class="mb-3 h-40 w-auto"
+                    fetchpriority="high"
+               />
+               <p>Geb&auml;udereinigung</p>
+          </div>
+          <div>
+               <img
+                    src={hausmeisterservice.src}
+                    alt="DG Service Logo"
+                    class="mb-3 h-40 w-auto"
+                    fetchpriority="high"
+               />
+               <p>Hausmeisterservice</p>
+          </div>
+     </div>
+</section>
