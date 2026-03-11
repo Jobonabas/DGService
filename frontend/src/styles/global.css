@@ -1,20 +1,75 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
-  --color-dark-brown: #9C7A57;
-  --color-light-brown: #EEE9D1;
+  --color-dark-brown: #9c7a57;
+  --color-light-brown: #eee9d1;
+  --color-dark-green: #47a044;
+  --color-custom-black: #403f3f;
 }
 
 @layer utilities {
   .text-navbar {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier Prime", Courier, monospace;
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.05em;
   }
+
   .text-footer {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier Prime", Courier, monospace;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
+  }
+
+  .text-h1 {
+    font-family: "Courier Prime", Courier, monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-dark-brown);
+    margin-bottom: 0.25rem;
+  }
+
+  .text-h1-special{
+    font-family: 'Mr De Haviland';
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-dark-green);
+    margin-left: 2rem;
+  }
+
+  .text-h1-special{
+    font-family: 'Mr De Haviland';
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-dark-green);
+    margin-left: 8rem;
+    margin-top: -0.3rem;
+  }
+}
+
+@layer components {
+  .about-section {
+    @apply w-full px-6 py-12;
+  }
+
+  .about-wrapper {
+    @apply mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 md:grid-cols-[260px_1fr];
+  }
+
+  .about-image {
+    @apply flex justify-center md:justify-start;
+  }
+
+  .about-portrait {
+    @apply h-auto w-52 object-cover md:w-60;
+  }
+
+  .about-content {
+    @apply text-left;
   }
 }
