@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+import collage from "../assets/Collage_Dennis.png";
+import placeholder from "../assets/Placeholder.png";
+---
+<div class="flex flex-wrap justify-center"> 
+		<img src={collage.src} alt="Eine Foto-Collage" class="mb-3 h-auto w-280" fetchpriority="high" />
+</div>
+<section class="about-section">
+  <div class="about-wrapper">
+    <div class="about-image">
+      <img
+        src={placeholder.src}
+        alt="Dennis Gehrung"
+        class="about-portrait"
+        fetchpriority="high"
+      />
+    </div>
+
+    <div class="about-content">
+      <h1 class="text-h1">&Uuml;ber mich</h1>
+      <h2 class="text-h1-special">Dennis</h2>
+      <p class="text-basic">
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+        nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+        rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+        ipsum dolor sit amet.
+      </p>
+    </div>
+  </div>
+</section>
