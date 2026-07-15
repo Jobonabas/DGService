@@ -45,11 +45,20 @@ html {
 
   .text-services{
     font-family: "Courier Prime", Courier, monospace;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.05em;
-    color: var(--color-dark-brown);
+    color: var(--color-custom-black);
   }
+
+   .tab-btn:hover[role="tab"] .text-services,
+  .tab-btn[aria-selected="true"] .text-services
+  {
+    color: var(--color-dark-brown);
+    transition: color 0.2s ease;
+  }
+  
+  
 }
 
 @layer components {

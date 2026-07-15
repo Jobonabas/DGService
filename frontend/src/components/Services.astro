@@ -4,46 +4,273 @@ import gartenpflege from "../assets/icons/Gartenpflege.svg";
 import winterservice from "../assets/icons/Winterservice.svg";
 import gebaeudereinigung from "../assets/icons/Gebaeudereinigung.svg";
 import hausmeisterservice from "../assets/icons/Gebaeudereinigung.svg";
+
+import { sanityClient } from "sanity:client";
+
+type Service = {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  images: {
+    alt?: string;
+    url: string;
+  }[];
+};
+
+const services: Service[] = await sanityClient.fetch(`
+  *[_type == "service"] {
+    _id,
+    title,
+    description,
+    category,
+    images[]{
+      alt,
+      "url": asset->url
+    }
+  }
+`);
+
+const tabs = [
+  { label: "Gartenpflege", category: "gartenpflege", icon:gartenpflege},
+  { label: "Winterservice", category: "winterservice", icon: winterservice},
+  { label: "Geb\u00E4udereinigung", category: "gebaeudereinigung", icon: gebaeudereinigung},
+  { label: "Hausmeisterservice", category: "hausmeisterservice", icon: hausmeisterservice}
+];
 ---
 
-<section class="about-section" id="about-section">
-     <div class="flex flex-wrap justify-center gap-16">
-          <div class="grid place-items-center ">
-               <img
-                    src={gartenpflege.src}
-                    alt="DG Service Logo"
-                    class="mb-3 h-24 w-auto"
-                    fetchpriority="high"
-               />
-               <p class="text-services">Gartenpflege</p>
-          </div>
-          <div class="grid place-items-center">
-               <img
-                    src={winterservice.src}
-                    alt="DG Service Logo"
-                    class="mb-3 h-24 w-auto"
-                    fetchpriority="high"
-               />
-               <p class="text-services">Winterservice</p>
-          </div>
-          <div class="grid place-items-center">
-               <img
-                    src={gebaeudereinigung.src}
-                    alt="DG Service Logo"
-                    class="mb-3 h-24 w-auto"
-                    fetchpriority="high"
-               />
-               <p class="text-services">Geb&auml;udereinigung</p>
-          </div>
-          <div class="grid place-items-center">
-               <img
-                    src={hausmeisterservice.src}
-                    alt="DG Service Logo"
-                    class="mb-3 h-24 w-auto"
-                    fetchpriority="high"
-               />
-               <p class="text-services">Hausmeisterservice</p>
-          </div>
-     </div>
-     <div></div>
+
+
+<section class="about-section" id="about-section" data-services>
+  <div
+    class="flex flex-wrap justify-center gap-16"
+    role="tablist"
+    aria-label="Dienstleistungen"
+    id="service-tabs"
+  >
+    { tabs.map((tab, index) => (
+      <button
+        class="grid place-items-center tab-btn"
+        type="button"
+        role="tab"
+        aria-selected={index === 0 ? "true" : "false"}
+        data-service-tab
+        data-category={tab.category}
+      >
+        <img
+          src={tab.icon.src}
+          alt={`${tab.label} Icon`}
+          class="mb-3 h-24 w-auto"
+          fetchpriority="high"
+        />
+        <p class="text-services">{tab.label}</p>
+      </button>
+    ))}
+  </div>
 </section>
+ 
+<section class="services-gallery" data-services>
+  {services.map((service, index) => (
+    <article
+      class={`service-panel ${service.category === tabs[0].category ? "is-active" : ""}`}
+      role="tabpanel"
+      data-service-panel
+      data-category={service.category}
+    >
+      <div class="service-layout">
+        <div class="service-slider">
+          <div class="service-slider-track">
+            {service.images.map((image, imageIndex) => (
+              <img
+                class={`service-image ${imageIndex === 0 ? "is-active" : ""}`}
+                src={image.url}
+                alt={image.alt || service.title}
+                loading="lazy"
+                data-service-image
+              />
+            ))}
+          </div>
+
+          {service.images.length > 1 && (
+            <div class="service-slider-controls">
+              <button type="button" data-prev-image aria-label="Vorheriges Bild">&#8249;</button>
+              <button type="button" data-next-image aria-label="N&auml;chstes Bild">&#8250;</button>
+            </div>
+          )}
+
+          {service.images.length > 1 && (
+            <div class="service-dots">
+              {service.images.map((_, imageIndex) => (
+                <button
+                  type="button"
+                  class={`service-dot ${imageIndex === 0 ? "is-active" : ""}`}
+                  data-dot={imageIndex}
+                  aria-label={`Bild ${imageIndex + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div class="service-content">
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </div>
+      </div>
+    </article>
+  ))}
+</section>
+
+<script>
+  const root = document;
+  const tabButtons = root.querySelectorAll<HTMLButtonElement>("[data-service-tab]");
+  const panels = root.querySelectorAll<HTMLElement>("[data-service-panel]");
+
+  //Tab-Logik
+  const activateCategory = (category: string) => {
+    tabButtons.forEach((tab) => {
+      const active = tab.dataset.category === category;
+      tab.setAttribute("aria-selected", active ? "true" : "false")
+    });
+
+    panels.forEach((panel) => {
+      const active = panel.dataset.category === category
+      panel.classList.toggle("is-active", active);
+    })
+  };
+
+  tabButtons.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const category = tab.dataset.category;
+      if (category) {
+        activateCategory(category);
+      }
+    });
+  });
+
+//Slider-Logik je Panel
+panels.forEach((panel) => {
+    const images = panel.querySelectorAll<HTMLImageElement>("[data-service-image]");
+    const dots = panel.querySelectorAll<HTMLButtonElement>("[data-dot]");
+    const prev = panel.querySelector<HTMLButtonElement>("[data-prev-image]");
+    const next = panel.querySelector<HTMLButtonElement>("[data-next-image]");
+    if(!images.length) return;
+    let currentIndex = 0;
+
+    const updateSlider = () => {
+      images.forEach((img, index) => {
+        img.classList.toggle("is-active", index === currentIndex);
+      });
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("is-active", index === currentIndex);
+      });
+    };
+
+    prev?.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateSlider();
+    })
+    
+    next?.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1 ) % images.length;
+      updateSlider();
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const dotIndex = dot.dataset.dot;
+        if(dotIndex) {
+          currentIndex = Number(dotIndex);
+          updateSlider();
+        }
+      });
+    });
+
+    updateSlider();
+});
+</script>
+
+
+<style>
+  .tab-btn:hover .text-services,
+  .tab-btn[aria-selected="true"] .text-services {
+    color: #8B5E3C;
+    transition: color 0.2s ease;
+  }
+
+  .service-panel {
+    display: none;
+  }
+
+  .service-panel.is-active {
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .service-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .service-slider {
+    position: relative;
+  }
+
+  .service-slider-track {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .service-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  .service-image.is-active {
+    display: block;
+  }
+
+  .service-slider-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+  }
+
+  .service-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .service-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 0;
+    background: #bbb;
+    cursor: pointer;
+  }
+
+  .service-dot.is-active {
+    background: #8B5E3C;
+  }
+
+  .service-content h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .service-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
