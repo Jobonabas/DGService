@@ -47,7 +47,7 @@ import garden from "../assets/pictures/garden.png"
 
     <div class="contact-form-card">
       <h3>Kontaktformular</h3>
-      <form>
+      <form id="contact-form">
         <div class="field field-textarea">
           <textarea id="message" name="message" placeholder="Nachricht" rows="5"></textarea>
         </div>
@@ -68,12 +68,48 @@ import garden from "../assets/pictures/garden.png"
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg>
           <span>Absenden</span>
         </button>
+        <p id="form-status"></p>
       </form>
     </div>
   </div>
 </section>
 
 <script>
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    const status = document.getElementById("form-status") as HTMLParagraphElement;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const payload = {
+            name: (form.elements.namedItem("name") as HTMLInputElement).value,
+            email: (form.elements.namedItem("mail") as HTMLInputElement).value,
+            phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+            message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+        }
+
+        status.textContent = "Wird gesendet...";
+
+        try {
+            const res = await fetch("http://localhost:3000/api/contact", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(payload),
+            });
+
+            if (res.ok){
+                status.textContent = "Danke! Ihre Nachricht wurde gesendet.";
+                form.reset();
+            }
+            else {
+                status.textContent = "Fehler beim Senden. Bitte versuchen sie es erneut."
+            }
+        } catch (err){
+                status.textContent = "Vebindung zum Server fehlgeschlagen.";
+        }
+
+    });
+
     
 </script>
 
