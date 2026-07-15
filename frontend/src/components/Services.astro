@@ -243,6 +243,20 @@ panels.forEach((panel) => {
     margin-top: 0.75rem;
   }
 
+  .service-slider-controls button {
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--colo);
+  padding: 0.25rem 0.75rem;
+  background-color: #bbb;
+  border-radius: 50%;
+}
+
+.service-slider-controls button:hover {
+  color: #6b4429;
+}
+
   .service-dots {
     display: flex;
     justify-content: center;
@@ -273,4 +287,80 @@ panels.forEach((panel) => {
       grid-template-columns: 1fr;
     }
   }
+
+
+  .service-slider-track {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 0.75rem; /* wie im Screenshot abgerundet */
+}
+
+/* Pfeile links/rechts, schwebend über dem Bild */
+.service-slider-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  padding: 0 1rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.service-slider-controls button {
+  pointer-events: auto;
+  font-size: 1.5rem;
+  line-height: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: #333;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.service-slider-controls button:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+/* Dots als Pille, schwebend unten mittig */
+.service-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.service-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 0;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.service-dot.is-active {
+  background: #333;
+  transform: scale(1.2);
+}
 </style>
