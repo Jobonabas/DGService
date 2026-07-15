@@ -1,0 +1,246 @@
+---
+import "../styles/global.css";
+import garden from "../assets/pictures/garden.png"
+---
+
+<section class="contact-section" id="contact">
+  <div class="contact-hero">
+    <img
+      src={garden.src}
+      alt="Ein Garten mit Werkzeugen"
+    />
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>
+        Nehmen Sie gerne mit mir Kontakt auf. <br>
+        Ich helfe Ihnen weiter
+      </h3>
+      <p>
+        DG Service Haus und Garten <br>
+        Brunnenstaße 13 <br>
+        D-73765 Neuhausen <br>
+        +49 174 3231403 <br>
+        info@dgservice.de
+      </p>
+
+      <div class="contact-actions">
+        <a href="tel:+491743231403" class="pill-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z"/></svg>
+            <span>Telefon</span>
+        </a>
+        <a href="mailto:info@dgservice.de" class="pill-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+            <span>Email</span>
+        </a>
+        <a href="https://wa.me/491743231403" target="_blank" rel="noopener noreferrer" class="pill-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.32A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm5.06 14.19c-.24.67-1.4 1.28-1.93 1.34-.5.06-1.13.09-1.82-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3s.74-2.12 1-2.42c.26-.29.57-.36.76-.36h.55c.18 0 .42-.07.65.5.24.58.82 2.01.89 2.16.07.15.12.32.02.51-.1.19-.15.31-.3.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.29.15.46.13.63-.08.17-.21.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.93.92.29.15.48.22.55.34.07.13.07.75-.17 1.42Z"/></svg>
+            <span>Whatsapp</span>
+        </a>
+        <a href="https://instagram.com/jonasgehrung" target="_blank" rel="noopener noreferrer" class="pill-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <h3>Kontaktformular</h3>
+      <form>
+        <div class="field field-textarea">
+          <textarea id="message" name="message" placeholder="Nachricht" rows="5"></textarea>
+        </div>
+
+        <div class="field field-line">
+          <input type="email" id="mail" name="mail" placeholder="Email (required)" required>
+        </div>
+
+        <div class="field field-line">
+          <input type="tel" id="phone" name="phone" placeholder="Telefon">
+        </div>
+
+        <div class="field field-line">
+          <input type="text" id="name" name="name" placeholder="Name (required)" required>
+        </div>
+
+        <button class="submit-btn" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg>
+          <span>Absenden</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+    
+</script>
+
+<style>
+  .contact-section {
+    position: relative;
+  }
+
+  .contact-hero img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2rem;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: var(--font-mono, monospace);
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: #333;
+    margin: 0 0 1.5rem;
+  }
+
+  .contact-info p {
+    font-family: system-ui, sans-serif;
+    color: #444;
+    line-height: 1.7;
+    margin: 0 0 2rem;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 260px;
+  }
+
+  .pill-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .pill-btn:hover {
+    background: #2a2a2a;
+  }
+
+  .pill-btn .icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Überlappende Formular-Card */
+  .contact-form-card {
+    background: #ececec;
+    padding: 2rem;
+    margin-top: -220px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .contact-form-card h3 {
+    font-family: var(--font-mono, monospace);
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 0 0 1.5rem;
+    color: #222;
+  }
+
+  .contact-form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .field {
+    display: flex;
+  }
+
+  .field-textarea textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 120px;
+    border: 1px solid #999;
+    background: transparent;
+    padding: 0.75rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #222;
+  }
+
+  .field-textarea textarea::placeholder {
+    color: #666;
+  }
+
+  .field-line input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #999;
+    background: transparent;
+    padding: 0.5rem 0.1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #222;
+  }
+
+  .field-line input::placeholder {
+    color: #666;
+  }
+
+  .field-line input:focus,
+  .field-textarea textarea:focus {
+    outline: none;
+    border-color: #222;
+  }
+
+  .submit-btn {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .submit-btn:hover {
+    background: #2a2a2a;
+  }
+
+  .submit-btn .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form-card {
+      margin-top: 1.5rem;
+    }
+  }
+</style>
+
