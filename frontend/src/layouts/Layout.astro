@@ -12,17 +12,26 @@ import '../styles/global.css'
 		<meta name="generator" content={Astro.generator} />
 		<title>DG Service</title>
 	</head>
-	<body>
-		<slot />
-	</body>
+	<body class="flex min-h-screen flex-col">
+    <main>
+        <slot />
+    </main>
+</body>
 </html>
 
 <style>
-	html,
-	body {
+    html, body {
+        margin: 0;
+        width: 100%;
+    }
 
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+    
+
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 </style>

@@ -1,0 +1,47 @@
+---
+import "../styles/global.css";
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import Layout from '../layouts/Layout.astro';
+---
+<Navbar></Navbar>
+<Layout>
+	<div class="impressum">
+        <div class="impressum-content">
+        <h3> Verantwortlich für den Inhalt</h3>
+        <p>
+            DG Service Haus und Garten <br>
+            Brunnenstaße 13 <br>
+            D-73765 Neuhausen <br>
+            +49 174 3231403 <br>
+            info@dgservice.de
+        </p>
+        </div>
+        <div class="impressum-technical">
+        <h3>Technischer Ersteller der Website</h3>
+        <p>
+            Gehrung Webdesign <br>
+            Lindenstraße 34/1<br>
+            D-73765 Neuhausen auf den Fildern<br>
+            jgehrung@web.de
+        </p>
+        </div>
+    </div>
+</Layout>
+<Footer></Footer>
+
+<style>
+    h3{
+        font-size: 1.25rem;
+        color: #403f3f;
+        font-weight: 00;
+    }
+    .impressum-technical {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    }
+    .impressum-content {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    }
+</style>

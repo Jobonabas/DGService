@@ -3,7 +3,7 @@ import "../styles/global.css";
 import gartenpflege from "../assets/icons/Gartenpflege.svg";
 import winterservice from "../assets/icons/Winterservice.svg";
 import gebaeudereinigung from "../assets/icons/Gebaeudereinigung.svg";
-import hausmeisterservice from "../assets/icons/Gebaeudereinigung.svg";
+import hausmeisterservice from "../assets/icons/Hausmeisterservice.svg";
 
 import { sanityClient } from "sanity:client";
 
@@ -113,8 +113,8 @@ const tabs = [
         </div>
 
         <div class="service-content">
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
+          <h3 class="service-title">{service.title}</h3>
+          <p class="service-description">{service.description}</p>
         </div>
       </div>
     </article>
@@ -307,6 +307,18 @@ panels.forEach((panel) => {
   .service-content h3 {
     margin-top: 0;
     margin-bottom: 1rem;
+  }
+
+  .service-title{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #403f3f;
+  }
+
+  .service-description{
+    font-size: 1rem;
+    color: #403f3f;
   }
 
   @media (max-width: 900px) {
