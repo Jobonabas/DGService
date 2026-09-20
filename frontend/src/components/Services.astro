@@ -3,7 +3,7 @@ import "../styles/global.css";
 import gartenpflege from "../assets/icons/Gartenpflege.svg";
 import winterservice from "../assets/icons/Winterservice.svg";
 import gebaeudereinigung from "../assets/icons/Gebaeudereinigung.svg";
-import hausmeisterservice from "../assets/icons/Gebaeudereinigung.svg";
+import hausmeisterservice from "../assets/icons/Hausmeisterservice.svg";
 
 import { sanityClient } from "sanity:client";
 
@@ -41,7 +41,7 @@ const tabs = [
 
 
 
-<section class="about-section" id="about-section" data-services>
+<section class="about-section" id="services" data-services>
   <div
     class="flex flex-wrap justify-center gap-16"
     role="tablist"
@@ -113,8 +113,8 @@ const tabs = [
         </div>
 
         <div class="service-content">
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
+          <h3 class="service-title">{service.title}</h3>
+          <p class="service-description">{service.description}</p>
         </div>
       </div>
     </article>
@@ -125,6 +125,10 @@ const tabs = [
   const root = document;
   const tabButtons = root.querySelectorAll<HTMLButtonElement>("[data-service-tab]");
   const panels = root.querySelectorAll<HTMLElement>("[data-service-panel]");
+  
+  console.log("devicePixelRatio:", window.devicePixelRatio);
+  console.log("innerWidth:", window.innerWidth, "innerHeight:", window.innerHeight);
+  console.log("root font-size:", getComputedStyle(document.documentElement).fontSize);
 
   //Tab-Logik
   const activateCategory = (category: string) => {
@@ -222,7 +226,6 @@ panels.forEach((panel) => {
     position: relative;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-radius: 0.75rem;
   }
 
   .service-image {
@@ -310,9 +313,29 @@ panels.forEach((panel) => {
     margin-bottom: 1rem;
   }
 
+  .service-title{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #403f3f;
+  }
+
+  .service-description{
+    font-size: 1rem;
+    color: #403f3f;
+  }
+
   @media (max-width: 900px) {
     .service-layout {
       grid-template-columns: 1fr;
     }
   }
+
+  .services-gallery {
+      width: 100%; /* erzwingt volle main-Breite statt shrink-to-fit */
+  }
+
+  .service-layout > * {
+      min-width: 0; /* verhindert, dass langer Text die Grid-Spalte über das fr-Verhältnis hinaus aufbläht */
+    }
 </style>

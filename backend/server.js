@@ -1,19 +1,18 @@
-const express = require("express");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import contactRouter from "./routes/contact.js"; // Pfad ggf. anpassen
+
+dotenv.config();
 
 const app = express();
-const PORT = 3001;
 
-app.get("/", (req, res) => {
-  res.send("Hello from the backend 🚀");
-});
+app.use(cors({ origin: "http://localhost:4321" })); // deine Astro-Dev-URL
+app.use(express.json());
 
-app.get("/api/hello", (req, res) => {
-  res.json({
-    message: "Backend is working",
-    timestamp: new Date()
-  });
-});
+app.use("/api", contactRouter);
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Server läuft auf http://localhost:${PORT}`);
 });
