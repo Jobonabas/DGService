@@ -1,0 +1,188 @@
+---
+export interface Props {
+    id?: string;
+}
+
+const { id = "notification-banner" } = Astro.props;
+---
+
+<div
+    id={id}
+    class="notification-banner"
+    data-notification-banner
+    role="status"
+    aria-live="polite"
+    hidden
+>
+    <span class="notification-icon" data-notification-icon aria-hidden="true"
+    ></span>
+    <span class="notification-message" data-notification-message></span>
+    <button
+        type="button"
+        class="notification-close"
+        data-notification-close
+        aria-label="Schließen">&times;</button
+    >
+</div>
+
+<script>
+    type NotificationType = "success" | "error" | "loading" | "info";
+
+    interface NotificationDetail {
+        type: NotificationType;
+        message: string;
+        duration?: number;
+    }
+
+    const icons: Record<NotificationType, string> = {
+        success: "✓",
+        error: "✕",
+        loading: "…",
+        info: "ℹ",
+    };
+
+    document
+        .querySelectorAll<HTMLElement>("[data-notification-banner]")
+        .forEach((banner) => {
+            const messageEl = banner.querySelector<HTMLElement>(
+                "[data-notification-message]",
+            );
+            const iconEl = banner.querySelector<HTMLElement>(
+                "[data-notification-icon]",
+            );
+            const closeBtn = banner.querySelector<HTMLButtonElement>(
+                "[data-notification-close]",
+            );
+            let hideTimeout: ReturnType<typeof setTimeout> | undefined;
+            let isAnimating = false;
+
+            const hide = () => {
+                if (banner.hidden) return;
+                if (hideTimeout) clearTimeout(hideTimeout);
+                isAnimating = true;
+                banner.classList.remove("is-visible");
+
+                const onTransitionEnd = (e: TransitionEvent) => {
+                    if (e.target !== banner) return;
+                    banner.hidden = true;
+                    banner.classList.remove(
+                        "is-success",
+                        "is-error",
+                        "is-loading",
+                        "is-info",
+                    );
+                    isAnimating = false;
+                    banner.removeEventListener(
+                        "transitionend",
+                        onTransitionEnd,
+                    );
+                };
+                banner.addEventListener("transitionend", onTransitionEnd);
+            };
+
+            const show = (detail: NotificationDetail) => {
+                if (hideTimeout) clearTimeout(hideTimeout);
+                banner.classList.remove(
+                    "is-success",
+                    "is-error",
+                    "is-loading",
+                    "is-info",
+                );
+                banner.classList.add(`is-${detail.type}`);
+                if (messageEl) messageEl.textContent = detail.message;
+                if (iconEl) iconEl.textContent = icons[detail.type];
+
+                if(banner.hidden){
+                    banner.hidden = false;
+                    void banner.offsetHeight;
+                }
+
+                isAnimating = false;
+                banner.classList.add("is-visible");
+
+                if (detail.duration){
+                    hideTimeout = setTimeout(hide, detail.duration);
+                }
+            };
+
+            closeBtn?.addEventListener("click", hide);
+
+            banner.addEventListener("notify", ((e: CustomEvent<NotificationDetail>)=>{
+                show(e.detail);
+            }) as EventListener);
+        });
+</script>
+
+<style>
+  .notification-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-family: system-ui, sans-serif;
+
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .notification-banner[hidden] {
+    display: none;
+  }
+
+  .notification-banner.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .notification-icon {
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .notification-message {
+    flex: 1;
+  }
+
+  .notification-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: inherit;
+    padding: 0;
+  }
+
+  .notification-banner.is-success {
+    background: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #b7e0c2;
+  }
+
+  .notification-banner.is-error {
+    background: #fdecea;
+    color: #c0392b;
+    border: 1px solid #f3c4bd;
+  }
+
+  .notification-banner.is-loading {
+    background: #eef1f5;
+    color: #444;
+    border: 1px solid #d7dce2;
+  }
+
+  .notification-banner.is-info {
+    background: #eaf2fb;
+    color: #2166a5;
+    border: 1px solid #bcd7f0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .notification-banner {
+      transition: none;
+    }
+  }
+</style>
